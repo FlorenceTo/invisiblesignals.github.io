@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Signals</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
+</head>
+<body>
+    <div class="container">
+        <!-- LEFT COLUMN - Index -->
+        <nav class="index">
+            <div class="index-header">
+                <h1>Index</h1>
+            </div>
+            <ul class="index-list">
+                <li><a href="#" data-page="info" class="active">00. Information</a></li>
+                <li><a href="#" data-page="ep1">01. Episode 01</a></li>
+                <li><a href="#" data-page="ep2">02. Episode 02</a></li>
+                <li><a href="#" data-page="ep3">03. Episode 03</a></li>
+                <li><a href="#" data-page="ep4">04. Episode 04</a></li>
+                <li><a href="#" data-page="ep5">05. Episode 05</a></li>
+                <li><a href="#" data-page="ep6">06. Episode 06</a></li>
+            </ul>
+            <div class="clock">
+                16:30 – 17:30 / Thursday 28.05.2026<br>
+                RESONANCE FM
+            </div>
+        </nav>
+
+        <!-- CENTER COLUMN - Dynamic Content -->
+        <main class="content" id="content">
+            <!-- Content loads here dynamically -->
+        </main>
+
+        <!-- RIGHT COLUMN - Info/Sidebar -->
+        <aside class="info">
+            <div class="broadcast-time">
+                <span class="label">Broadcast</span>
+                <span class="time">16:30 – 17:30 / Thursday 28.05.2026</span>
+            </div>
+            <div class="episode-title" id="episode-title">
+                01.
+            </div>
+            <div class="description" id="description">
+                <!-- Dynamic description loads here -->
+            </div>
+            <div class="contact">
+                <p>If you'd like to submit audio, field recordings, archival material, or have an idea for a collaboration, please get in touch :)</p>
+                <div class="email">
+                    <strong>Invisible Signals</strong><br>
+                    seirynx@mailfence.com
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Episode data
+        const episodes = {
+            info: {
+                title: "00.",
+                description: "Invisible Signals is an experimental radio series, structured as a live progression through live electronics, field recordings, and archival fragments. Taking its title from waves that remain imperceptible even as they are heard and felt, the series attends to signal as a materially distributed condition of vibration, shaped through bodies, environments, and infrastructural systems. Each episode moves between sonic essay, radio play, and live composition, examining rupture, resistance, and repair across borders, technological infrastructures, and contested atmospheres. This is the first series hosted by Florence To."
+            },
+            ep1: {
+                title: "01.",
+                description: "Episode 01 content goes here. The full description of the first episode would appear in this space, with details about the sonic essay, field recordings, and live composition elements featured in this broadcast."
+            },
+            ep2: {
+                title: "02.",
+                description: "Episode 02 content goes here. Each episode examines different aspects of rupture, resistance, and repair across various technological and environmental contexts."
+            },
+            ep3: {
+                title: "03.",
+                description: "Episode 03 content goes here. The series moves between different formats including sonic essay, radio play, and live composition."
+            },
+            ep4: {
+                title: "04.",
+                description: "Episode 04 content goes here. Exploring contested atmospheres and infrastructural systems through sound."
+            },
+            ep5: {
+                title: "05.",
+                description: "Episode 05 content goes here. Field recordings and archival fragments shape each unique episode."
+            },
+            ep6: {
+                title: "06.",
+                description: "Episode 06 content goes here. The final episode of the first series hosted by Florence To."
+            }
+        };
+
+        // Function to load content
+        function loadPage(pageId) {
+            const episode = episodes[pageId];
+            if (episode) {
+                document.getElementById('episode-title').innerHTML = episode.title;
+                document.getElementById('description').innerHTML = `<p>${episode.description}</p>`;
+                
+                // Also update center column with full content
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = `
+                    <div class="episode-full">
+                        <h2>${episode.title}</h2>
+                        <div class="episode-body">
+                            ${episode.description.split('. ').join('.<br><br>')}
+                        </div>
+                    </div>
+                `;
+                
+                // Update active state on index
+                document.querySelectorAll('.index-list a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Load info page by default
+        loadPage('info');
+
+        // Add click handlers
+        document.querySelectorAll('.index-list a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                loadPage(pageId);
+            });
+        });
+    </script>
+</body>
+</html>
